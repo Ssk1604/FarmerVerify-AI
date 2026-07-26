@@ -332,6 +332,23 @@ This project is open-source software licensed under the **[MIT License](LICENSE)
 
 ---
 
+# Reporting a Vulnerability
+
+If you discover a security vulnerability, please do not create a public GitHub issue.
+
+Instead, email:
+
+**kothapallisathwik5@gmail.com**
+
+Please include:
+
+- Description of the vulnerability
+- Steps to reproduce
+- Potential impact
+- Suggested mitigation (if known)
+
+I will acknowledge receipt and investigate the issue as soon as possible.
+
 ## 🤝 Contribution Guidelines
 
 Contributions are welcome! Please follow these guidelines:
@@ -352,7 +369,7 @@ If you discover a security vulnerability, please review our [SECURITY.md](SECURI
 
 For open-source inquiries, technical questions, or bug reports:
 - **Issues**: [GitHub Issues Page](https://github.com/open-source/farmerverify-ai/issues)
-- **Security**: `security@example.com`
+
 
 ---
 
