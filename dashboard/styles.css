@@ -1,0 +1,712 @@
+/* dashboard/styles.css — FarmerVerify AI Admin Dashboard with Lucide Icons */
+
+:root {
+  --primary: #2d6a4f;
+  --primary-light: #40916c;
+  --primary-dark: #1b4332;
+  --primary-bg: #d8f3dc;
+  --warning: #e65100;
+  --warning-bg: #fff3e0;
+  --danger: #c62828;
+  --danger-bg: #fde8e8;
+  --success: #2d6a4f;
+  --success-bg: #d8f3dc;
+  --info: #1565c0;
+  --info-bg: #e3f2fd;
+  --cyan: #0891b2;
+  --cyan-bg: #ecfeff;
+  --purple: #7c3aed;
+  --purple-bg: #f3e8ff;
+  --bg: #f5f7fa;
+  --card-bg: #ffffff;
+  --border: #e8ecf1;
+  --text: #1a1a2e;
+  --text-muted: #6b7280;
+  --text-light: #9ca3af;
+  --sidebar-width: 260px;
+  --topbar-height: 64px;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Lucide icon helpers */
+.nav-lucide { width: 18px; height: 18px; stroke-width: 2; }
+.icon-white { width: 28px; height: 28px; color: #fff; }
+.icon-white-sm { width: 18px; height: 18px; color: #fff; }
+.search-icon { width: 16px; height: 16px; color: var(--text-muted); position: absolute; left: 12px; top: 50%; transform: translateY(-50%); }
+
+/* ── Sidebar ──────────────────────────────── */
+.sidebar {
+  width: 260px;                        /* keep whatever you have */
+  background: linear-gradient(180deg, var(--primary-dark) 0%, #162d22 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  position: fixed;                     /* ← MUST be fixed */
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+  transition: transform 0.3s;
+}
+
+.sidebar-header { display: flex; align-items: center; gap: 12px; padding: 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sidebar-logo-icon { width: 42px; height: 42px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+.sidebar-title { font-weight: 700; font-size: 15px; }
+.sidebar-subtitle { font-size: 11px; opacity: 0.6; }
+
+.sidebar-nav { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border: none; background: transparent;
+  color: rgba(255,255,255,0.7); font-size: 13px; font-family: inherit;
+  border-radius: 8px; cursor: pointer; transition: all 0.2s;
+  text-align: left; width: 100%; position: relative;
+}
+.nav-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-item.active { background: rgba(255,255,255,0.15); color: #fff; font-weight: 600; }
+
+.nav-badge {
+  position: absolute; right: 10px;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 10px;
+  min-width: 20px; text-align: center;
+}
+.badge-review { background: var(--warning); color: #fff; }
+.badge-auto { background: var(--cyan); color: #fff; }
+
+.sidebar-footer { padding: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+.sidebar-user { display: flex; align-items: center; gap: 10px; }
+.user-avatar { width: 36px; height: 36px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.user-name { font-weight: 600; font-size: 13px; }
+.user-role { font-size: 11px; opacity: 0.5; }
+
+.main-content {
+  position: relative;
+  margin-left: 260px !important;       /* ← !important forces it */
+  width: calc(100% - 260px) !important;
+  min-height: 100vh;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 64px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  box-sizing: border-box;
+  /* DO NOT add margin-left here */
+}
+.menu-toggle { display: none; background: none; border: none; cursor: pointer; }
+.page-title { font-size: 18px; font-weight: 700; color: var(--primary-dark); }
+.topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+
+.search-box {
+  display: flex; align-items: center; position: relative;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+}
+.search-box input {
+  border: none; background: transparent; padding: 8px 12px 8px 36px;
+  font-size: 13px; font-family: inherit; width: 260px; outline: none;
+}
+
+.btn-refresh {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--primary-bg); color: var(--primary);
+  border: 1px solid rgba(45,106,79,0.2); padding: 8px 14px;
+  border-radius: 8px; font-size: 12px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all 0.2s;
+}
+.btn-refresh:hover { background: var(--primary); color: #fff; }
+
+/* ── Views ────────────────────────────────── */
+.view {
+  display: none;
+  padding: 24px;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.view.active {
+  display: block;
+}
+
+/* ── Info Banners ─────────────────────────── */
+.view-info-banner {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; border-radius: var(--radius);
+  margin-bottom: 20px; font-size: 13px;
+}
+.view-info-banner strong { display: block; margin-bottom: 4px; }
+.view-info-banner p { margin: 0; opacity: 0.8; font-size: 12px; }
+.info-orange { background: var(--warning-bg); color: var(--warning); border: 1px solid rgba(230,81,0,0.2); }
+.info-cyan { background: var(--cyan-bg); color: var(--cyan); border: 1px solid rgba(8,145,178,0.2); }
+
+/* ── Stats ────────────────────────────────── */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+
+.stat-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+.stat-icon-wrap {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.stat-icon-wrap svg { width: 22px; height: 22px; color: #fff; }
+
+.stat-icon-blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.stat-icon-cyan { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+.stat-icon-orange { background: linear-gradient(135deg, #f97316, #ea580c); }
+.stat-icon-green { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.stat-icon-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.stat-icon-purple { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+
+.stat-value { font-size: 26px; font-weight: 800; }
+.stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+/* ── Section Cards ────────────────────────── */
+.section-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+.section-title {
+  font-size: 14px; font-weight: 700; margin-bottom: 14px;
+  color: var(--primary-dark); display: flex; align-items: center; gap: 8px;
+}
+
+.type-breakdown { display: flex; gap: 12px; flex-wrap: wrap; }
+.type-chip {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 18px;
+}
+.type-chip-count { font-weight: 800; font-size: 20px; color: var(--primary); }
+.type-chip-label { color: var(--text-muted); font-size: 13px; }
+
+/* ── Tables ───────────────────────────────── */
+.table-container { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  background: var(--bg); padding: 10px 12px; text-align: left;
+  font-weight: 600; color: var(--text-muted); border-bottom: 2px solid var(--border);
+  white-space: nowrap; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; cursor: pointer; }
+tbody tr:hover { background: #f8fafb; }
+td { padding: 10px 12px; vertical-align: middle; }
+.td-id { font-family: 'Courier New', monospace; font-size: 11px; color: var(--primary); font-weight: 600; }
+
+/* ── Badges ───────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap;
+}
+.badge-verified { background: var(--success-bg); color: var(--success); }
+.badge-needs_review { background: var(--warning-bg); color: var(--warning); }
+.badge-rejected { background: var(--danger-bg); color: var(--danger); }
+.badge-unknown { background: #f3f4f6; color: #6b7280; }
+.badge-auto-method { background: var(--cyan-bg); color: var(--cyan); }
+.badge-manual-method { background: var(--purple-bg); color: var(--purple); }
+.badge-dup { background: #fef3c7; color: #92400e; font-size: 10px; padding: 2px 6px; }
+
+/* ── Buttons ──────────────────────────────── */
+.btn-primary { background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+.btn-primary:hover { background: var(--primary-light); }
+.btn-success { background: var(--success); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.btn-success:hover { background: var(--primary-light); }
+.btn-danger { background: var(--danger); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.btn-danger:hover { background: #b71c1c; }
+.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.btn-outline:hover { background: var(--bg); border-color: var(--text-muted); }
+.btn-sm { padding: 5px 10px; font-size: 11px; }
+.btn-icon { display: inline-flex; align-items: center; gap: 4px; }
+
+/* ── Filters ──────────────────────────────── */
+.view-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+.filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-group select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; background: var(--card-bg); cursor: pointer; outline: none; }
+
+/* ── Search ───────────────────────────────── */
+.search-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.search-panel h3 { font-size: 16px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.search-panel p { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+.search-input-group { display: flex; gap: 8px; }
+.search-input-group input { flex: 1; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; }
+.search-input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); }
+
+/* ── Modal ────────────────────────────────── */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+.modal.open { display: flex; }
+.modal-content { background: var(--card-bg); border-radius: var(--radius); width: 90%; max-width: 760px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+.modal-image-content { max-width: 900px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--card-bg); z-index: 10; }
+.modal-header h2 { font-size: 16px; font-weight: 700; }
+.modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); padding: 4px 8px; border-radius: 6px; }
+.modal-close:hover { background: var(--bg); color: var(--text); }
+.modal-body { padding: 24px; }
+.modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; position: sticky; bottom: 0; background: var(--card-bg); }
+
+/* ── Detail Sections ──────────────────────── */
+.detail-section { margin-bottom: 20px; }
+.detail-section-title { font-size: 13px; font-weight: 700; color: var(--primary-dark); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.detail-item { display: flex; flex-direction: column; gap: 2px; padding: 8px; background: var(--bg); border-radius: 8px; }
+.detail-label { font-size: 11px; color: var(--text-light); font-weight: 500; }
+.detail-value { font-size: 13px; font-weight: 500; }
+.detail-value.mono { font-family: 'Courier New', monospace; font-size: 12px; color: var(--primary); }
+
+.score-bar { height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; margin-top: 4px; }
+.score-bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+.score-good { background: var(--success); }
+.score-medium { background: var(--warning); }
+.score-bad { background: var(--danger); }
+
+.admin-notes-input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 60px; outline: none; }
+.admin-notes-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); }
+
+/* Document preview in modal */
+.doc-preview-container {
+  display: flex; justify-content: center; align-items: center;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px; cursor: pointer; transition: all 0.2s;
+}
+.doc-preview-container:hover { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); }
+.doc-preview-container img { max-width: 100%; max-height: 200px; border-radius: 6px; }
+.doc-preview-label { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+.empty-state-icon { font-size: 48px; margin-bottom: 12px; }
+.empty-state-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.empty-state-text { font-size: 13px; }
+
+/* Toast */
+.toast-container { position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
+.toast { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; box-shadow: var(--shadow-lg); font-size: 13px; display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s; min-width: 280px; }
+.toast-success { border-left: 4px solid var(--success); }
+.toast-error { border-left: 4px solid var(--danger); }
+.toast-info { border-left: 4px solid var(--info); }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* ── Responsive ───────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main-content { margin-left: 0; }
+  .menu-toggle { display: block; }
+  .search-box input { width: 160px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .detail-grid { grid-template-columns: 1fr; }
+  .modal-content { width: 95%; max-height: 90vh; }
+}
+
+/* ── Action buttons in table ──────────────────────────── */
+
+.actions-cell {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-icon {
+    background: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 6px 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: #555;
+}
+
+.btn-icon:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+    color: #222;
+}
+
+.btn-preview:hover {
+    border-color: #4a90d9;
+    color: #4a90d9;
+    background: #eef4fb;
+}
+
+.btn-detail:hover {
+    border-color: #50a14f;
+    color: #50a14f;
+    background: #eef8ee;
+}
+
+.btn-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ── Image Modal ─────────────────────────────────────── */
+/* ── Image preview modal ──────────────────────────────────── */
+#imageModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+/* THIS IS THE KEY LINE — without it, classList.add('open') does nothing */
+#imageModal.open {
+  display: flex !important;
+}
+
+.image-modal-inner {
+  position: relative;
+  max-width: 94vw;
+  max-height: 94vh;
+  cursor: default;
+}
+
+.image-modal-inner img {
+  display: block;
+  max-width: 100%;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+.image-modal-close-btn {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 10;
+  transition: transform 0.15s;
+}
+
+.image-modal-close-btn:hover {
+  transform: scale(1.1);
+}
+/* ── Copy button ──────────────────────────────────────────── */
+.copy-btn {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-family: inherit;
+  color: #6b7280;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background: var(--primary-bg);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.copy-btn:disabled {
+  cursor: default;
+}
+
+/* ── OCR Extract Table ────────────────────────────────────────── */
+
+#ocr-table-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ocr-section-header {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 12px;
+}
+
+.copy-btn {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-family: inherit;
+  color: #6b7280;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background: var(--primary-bg);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.copy-btn:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* In dashboard/styles.css */
+.badge-cc { background: #7c3aed; color: #fff; }
+/* Add or update this rule */
+.view-info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  margin-top: 8px;       /* ← ADD THIS to push it down from the topbar */
+  font-size: 13px;
+}
+/* ── Purple info banner for CC Field Visits ───────────────────── */
+.info-purple {
+  background: #f5f3ff;
+  color: #6d28d9;
+  border: 1px solid #ddd6fe;
+}
+
+.info-purple strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 14px;
+}
+
+.info-purple p {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+/* ── Fix all view banners — prevent overlap with topbar ──────────── */
+.view {
+  padding: 24px;
+}
+
+/* The first child of every view gets a little breathing room
+   so it never clips under the sticky topbar */
+.view > *:first-child {
+  margin-top: 0;
+}
+
+/* ── Consistent view-info-banner sizing ──────────────────────────── */
+.view-info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.view-info-banner svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── CC table improvements — match other tables ──────────────────── */
+#ccVisitsTable table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+#ccVisitsTable thead th {
+  background: var(--bg);
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#ccVisitsTable tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+#ccVisitsTable tbody tr:hover {
+  background: #f8fafb;
+}
+
+#ccVisitsTable td {
+  padding: 10px 12px;
+  vertical-align: middle;
+}
+
+/* ── Person count badge sizing ───────────────────────────────────── */
+#ccVisitsTable .person-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.person-badge-ok   { background: #d8f3dc; color: #2d6a4f; }
+.person-badge-fail { background: #fde8e8; color: #c62828; }
+
+/* ── GPS link styling ────────────────────────────────────────────── */
+#ccVisitsTable .gps-link {
+  font-size: 11px;
+  color: #1565c0;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+#ccVisitsTable .gps-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Confirm / Flag button sizing ────────────────────────────────── */
+#ccVisitsTable .btn-success {
+  padding: 5px 12px;
+  font-size: 11px;
+}
+
+#ccVisitsTable .btn-danger {
+  padding: 5px 12px;
+  font-size: 11px;
+}
+
+
+/* ── Ensure main content never goes under the sidebar ────────────── */
+.main-content {
+  margin-left: var(--sidebar-width);  /* already set, but ensure it applies */
+  flex: 1;
+  min-height: 100vh;
+  min-width: 0;                        /* ← ADD: prevents overflow under sidebar */
+}
+
+/* ── Fix view padding so content starts inside the visible area ──── */
+.view {
+  padding: 24px;
+  max-width: 100%;                     /* ← ADD: constrain to available width */
+  box-sizing: border-box;              /* ← ADD: include padding in width calc */
+}
+
+/* ── Fix table overflow in CC section ───────────────────────────── */
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* ── Fix section-card to not overflow ───────────────────────────── */
+.section-card {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ── CC visits table — fix column widths so nothing wraps badly ─── */
+#ccVisitsTable table {
+  width: 100%;
+  table-layout: fixed;                 /* ← ADD: forces columns to respect widths */
+  border-collapse: collapse;
+}
+
+#ccVisitsTable thead th:nth-child(1) { width: 120px; }  /* Ref ID     */
+#ccVisitsTable thead th:nth-child(2) { width: 130px; }  /* Status     */
+#ccVisitsTable thead th:nth-child(3) { width: 110px; }  /* Persons    */
+#ccVisitsTable thead th:nth-child(4) { width: 130px; }  /* GPS        */
+#ccVisitsTable thead th:nth-child(5) { width: 100px; }  /* Date       */
+#ccVisitsTable thead th:nth-child(6) { width:  80px; }  /* Quality    */
+#ccVisitsTable thead th:nth-child(7) { width: auto;  }  /* Location   */
+#ccVisitsTable thead th:nth-child(8) { width: 110px; }  /* Actions    */
+
+#ccVisitsTable td {
+  padding: 10px 12px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Location column — allow wrapping since it has descriptive text */
+#ccVisitsTable td:nth-child(7) {
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* ── Info banner — fix overlap with sidebar ──────────────────────── */
+.view-info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 1.5;
+  width: 100%;
+  box-sizing: border-box;
+}
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40%           { transform: scale(1.0); opacity: 1;   }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmerVerify AI</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="bot-avatar">🌳</div>
+      <div class="header-info">
+        <h1>FarmerVerify AI</h1>
+        <div class="header-sub">
+          <span class="status-dot online" id="statusDot"></span>
+          <span class="status-text" id="statusText">Online</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <!-- Mute audio toggle -->
+      <button class="icon-btn" id="muteBtn" title="Toggle audio">🔊</button>
+      <!-- Reset / Restart chat -->
+      <button class="icon-btn" id="resetBtn" title="Restart chat">↺</button>
+    </div>
+  </header>
+
+  <!-- ── Inactivity Banner (hidden by default) ─────────── -->
+  <div class="inactivity-banner" id="inactivityBanner" style="display:none">
+    <span id="inactivityMsg">Session paused due to inactivity.</span>
+    <button id="resumeBtn">Resume</button>
+  </div>
+
+  <!-- ── Chat Window ───────────────────────────────────── -->
+  <main class="chat-window" id="chatWindow"></main>
+
+  <!-- ── Progress Bar ──────────────────────────────────── -->
+  <div class="progress-bar-container" id="progressBar" style="display:none">
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <span class="progress-label" id="progressLabel">Processing…</span>
+  </div>
+
+  <!-- ── Input Area ────────────────────────────────────── -->
+  <footer class="input-area" id="inputArea">
+    <input type="file" id="fileInput"
+  accept="image/jpeg,image/png,image/webp,image/jpg,application/pdf,.pdf" style="display:none" />
+
+    <input type="text" class="text-input" id="textInput"
+      placeholder="Type a message…" autocomplete="off" />
+
+    <button class="attach-btn" id="attachBtn" title="Attach document"
+      style="display:none">📎</button>
+
+    <button class="send-btn" id="sendBtn">➤</button>
+  </footer>
+
+</div>
+
+<!-- ── Image Modal ───────────────────────────────────────── -->
+<div class="modal-overlay" id="imageModal" style="display:none">
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose">✕</button>
+    <img id="modalImage" src="" alt="Document preview" />
+  </div>
+</div>
+
+<script src="chat.js"></script>
+</body>
+</html>

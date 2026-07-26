@@ -1,0 +1,78 @@
+# ── Secrets & Credentials ──
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.*
+credentials.*
+service_account*.json
+token_test.py
+
+# ── Real Uploaded Data (PII) ──
+uploads/
+results/
+Sample_Data_All/
+test_data/
+audio/
+demo/videos/
+demo/screenshots/
+
+# ── Logs ──
+logs/
+backend/logs/
+*.log
+farmerverify.log
+
+# ── Internal Documents ──
+*Internal Doc*
+*demo+Q&A*
+*Final round*
+*internal*
+*INTERNAL*
+*confidential*
+*CONFIDENTIAL*
+
+# ── Python ──
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# ── OS & Editor ──
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Media (never commit real documents) ──
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# ── Node (if any frontend tooling) ──
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

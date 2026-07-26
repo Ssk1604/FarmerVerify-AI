@@ -1,0 +1,7 @@
+# WhatsApp Bot dependencies
+twilio==9.0.4
+flask==3.0.2
+requests==2.31.0
+python-dotenv==1.0.1
+gTTS==2.5.1
+google-cloud-texttospeech==2.16.3

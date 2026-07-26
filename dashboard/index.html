@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FarmerVerify AI — Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="lucide.js"></script>
+</head>
+<body>
+
+  <!-- ── Sidebar ─────────────────────────────────────────────── -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo-icon">
+        <i data-lucide="tree-pine" class="icon-white"></i>
+      </div>
+      <div>
+        <div class="sidebar-title">FarmerVerify AI</div>
+        <div class="sidebar-subtitle">Admin Dashboard</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-view="overview" onclick="switchView('overview')">
+        <i data-lucide="layout-dashboard" class="nav-lucide"></i> Overview
+      </button>
+      <button class="nav-item" data-view="auto-verified" onclick="switchView('auto-verified')">
+        <i data-lucide="cpu" class="nav-lucide"></i> Auto-Verified
+        <span id="autoBadge" class="nav-badge badge-auto">0</span>
+      </button>
+      <button class="nav-item" data-view="needs-review" onclick="switchView('needs-review')">
+        <i data-lucide="alert-triangle" class="nav-lucide"></i> Manual Review
+        <span id="reviewBadge" class="nav-badge badge-review">0</span>
+      </button>
+      <button class="nav-item" data-view="cc-visits" onclick="switchView('cc-visits')">
+        <i data-lucide="camera" class="nav-lucide"></i> CC Field Visits
+        <span id="ccBadge" class="nav-badge badge-cc">0</span>
+      </button>
+      <button class="nav-item" data-view="farmer-profiles" onclick="switchView('farmer-profiles')">
+  <i data-lucide="users" class="nav-lucide"></i> Farmer Profiles
+</button>
+      <button class="nav-item" data-view="all-docs" onclick="switchView('all-docs')">
+        <i data-lucide="folder-open" class="nav-lucide"></i> All Documents
+      </button>
+      <button class="nav-item" data-view="verified" onclick="switchView('verified')">
+        <i data-lucide="check-circle" class="nav-lucide"></i> Verified
+      </button>
+      <button class="nav-item" data-view="rejected" onclick="switchView('rejected')">
+        <i data-lucide="x-circle" class="nav-lucide"></i> Rejected
+      </button>
+      <button class="nav-item" data-view="search" onclick="switchView('search')">
+        <i data-lucide="search" class="nav-lucide"></i> Search
+      </button>
+      <button class="nav-item" data-view="deleted-items" onclick="switchView('deleted-items')">
+  <i data-lucide="trash-2" class="nav-lucide"></i> Deleted Items
+</button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar">
+          <i data-lucide="user" class="icon-white-sm"></i>
+        </div>
+        <div>
+          <div class="user-name" id="adminName">Admin</div>
+          <div class="user-role">Coordinator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <button class="menu-toggle" onclick="toggleSidebar()">
+        <i data-lucide="menu"></i>
+      </button>
+      <h1 class="page-title" id="pageTitle">Overview</h1>
+      <div class="topbar-actions">
+        <div class="search-box">
+          <i data-lucide="search" class="search-icon"></i>
+          <input type="text" id="globalSearch" placeholder="Search by name, Aadhaar, phone…" />
+        </div>
+        <button class="btn-refresh" onclick="refreshData()">
+          <i data-lucide="refresh-cw" style="width:14px;height:14px"></i> Refresh
+        </button>
+      </div>
+    </header>
+
+    <!-- ── Overview ───────────────────────────────────────────── -->
+    <section id="view-overview" class="view active">
+      <div class="stats-grid">
+        <div class="stat-card stat-total">
+          <div class="stat-icon-wrap stat-icon-blue">
+            <i data-lucide="file-text"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Total Documents</div>
+          </div>
+        </div>
+        <div class="stat-card stat-auto">
+          <div class="stat-icon-wrap stat-icon-cyan">
+            <i data-lucide="cpu"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statAutoVerified">0</div>
+            <div class="stat-label">Auto-Verified</div>
+          </div>
+        </div>
+        <div class="stat-card stat-review">
+          <div class="stat-icon-wrap stat-icon-orange">
+            <i data-lucide="alert-triangle"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statReview">0</div>
+            <div class="stat-label">Needs Review</div>
+          </div>
+        </div>
+        <div class="stat-card stat-verified">
+          <div class="stat-icon-wrap stat-icon-green">
+            <i data-lucide="check-circle"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statVerified">0</div>
+            <div class="stat-label">Verified</div>
+          </div>
+        </div>
+        <div class="stat-card stat-rejected">
+          <div class="stat-icon-wrap stat-icon-red">
+            <i data-lucide="x-circle"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statRejected">0</div>
+            <div class="stat-label">Rejected</div>
+          </div>
+        </div>
+        <div class="stat-card stat-time">
+          <div class="stat-icon-wrap stat-icon-purple">
+            <i data-lucide="clock"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="statAvgTime">0s</div>
+            <div class="stat-label">Avg. Processing</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h3 class="section-title">
+          <i data-lucide="bar-chart-2" style="width:16px;height:16px"></i>
+          Document Type Breakdown
+        </h3>
+        <div id="typeBreakdown" class="type-breakdown"></div>
+      </div>
+
+      <div class="section-card">
+        <h3 class="section-title">
+          <i data-lucide="clock" style="width:16px;height:16px"></i>
+          Recent Documents
+        </h3>
+        <div id="recentDocs" class="table-container"></div>
+      </div>
+    </section>
+
+    <!-- ── Auto-Verified ──────────────────────────────────────── -->
+    <section id="view-auto-verified" class="view">
+      <div class="view-info-banner info-cyan">
+        <i data-lucide="cpu"></i>
+        <div>
+          <strong>Auto-Verified Documents</strong>
+          <p>These documents passed all automated checks with high confidence.
+             No manual review required.</p>
+        </div>
+      </div>
+      <div id="autoVerifiedTable" class="table-container"></div>
+    </section>
+
+    <!-- ── Manual Review ──────────────────────────────────────── -->
+    <section id="view-needs-review" class="view">
+      <div class="view-info-banner info-orange">
+        <i data-lucide="alert-triangle"></i>
+        <div>
+          <strong>Manual Review Required</strong>
+          <p>These documents need human verification.
+             Review extracted data, check the document image, then approve or reject.</p>
+        </div>
+      </div>
+      <div id="reviewDocsTable" class="table-container"></div>
+    </section>
+
+    <!-- ── CC Field Visits ────────────────────────────────────── -->
+    <section id="view-cc-visits" class="view">
+      <div class="view-info-banner info-purple">
+        <i data-lucide="camera" style="width:18px;height:18px;flex-shrink:0;margin-top:1px"></i>
+        <div>
+          <strong>CC Field Visit Photos</strong>
+          <p>Photos submitted by field staff showing farmer + field representative at
+             training site. Requires 2+ people and valid GPS coordinates.
+             These are separate from document verification.</p>
+        </div>
+      </div>
+      <div class="section-card">
+        <div id="ccVisitsTable" class="table-container"></div>
+      </div>
+    </section>
+
+    <!-- ── Farmer Profiles ────────────────────────────────── -->
+<section id="view-farmer-profiles" class="view">
+  <div class="view-info-banner" style="background:#f0fdf4;color:#2d6a4f;
+       border:1px solid #bbf7d0;display:flex;align-items:flex-start;
+       gap:14px;padding:16px 20px;border-radius:12px;margin-bottom:20px">
+    <i data-lucide="users" style="width:18px;height:18px;flex-shrink:0;margin-top:1px"></i>
+    <div>
+      <strong>Farmer Profiles</strong>
+      <p style="margin:4px 0 0;font-size:12px;opacity:0.8">
+        All documents grouped by farmer. Shows onboarding completeness
+        and readiness score. A farmer needs Aadhaar + Land Record +
+        Bank Passbook all verified to be fully onboarded.
+      </p>
+    </div>
+  </div>
+  <div class="view-toolbar">
+    <div class="search-input-group" style="max-width:400px">
+      <input type="text" id="farmerSearchInput" placeholder="Search by name or Aadhaar…" />
+      <button class="btn-primary" onclick="searchFarmers()">Search</button>
+    </div>
+  </div>
+  <div id="farmerProfilesContainer"></div>
+</section>
+
+    <!-- ── All Documents ──────────────────────────────────────── -->
+    <section id="view-all-docs" class="view">
+      <div class="view-toolbar">
+        <div class="filter-group">
+          <select id="filterDocType" onchange="loadDocuments()">
+            <option value="">All Types</option>
+            <option value="aadhaar_card">Aadhaar Card</option>
+            <option value="bank_passbook">Bank Passbook</option>
+            <option value="land_record">Land Record</option>
+            <option value="voter_id">Voter ID</option>
+          </select>
+          <select id="filterStatus" onchange="loadDocuments()">
+            <option value="">All Statuses</option>
+            <option value="verified">Verified</option>
+            <option value="needs_review">Needs Review</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <select id="filterSort" onchange="loadDocuments()">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+      </div>
+      <div id="allDocsTable" class="table-container"></div>
+    </section>
+
+    <!-- ── Verified ───────────────────────────────────────────── -->
+    <section id="view-verified" class="view">
+      <div id="verifiedDocsTable" class="table-container"></div>
+    </section>
+
+    <!-- ── Rejected ───────────────────────────────────────────── -->
+    <section id="view-rejected" class="view">
+      <div id="rejectedDocsTable" class="table-container"></div>
+    </section>
+
+    <!-- ── Search ─────────────────────────────────────────────── -->
+    <section id="view-search" class="view">
+      <div class="search-panel">
+        <h3>
+          <i data-lucide="search" style="width:18px;height:18px"></i>
+          Advanced Search
+        </h3>
+        <p>Search by name, Aadhaar number, phone, account number, village,
+           district, or any extracted field.</p>
+        <div class="search-input-group">
+          <input type="text" id="advancedSearchInput" placeholder="Enter search term…" />
+          <button class="btn-primary" onclick="handleAdvancedSearch()">Search</button>
+        </div>
+      </div>
+      <div id="searchResults" class="table-container"></div>
+    </section>
+
+    <section id="view-deleted-items" class="view">
+  <div class="view-info-banner" style="background:#fef2f2;color:#991b1b;
+       border:1px solid #fecaca;display:flex;align-items:flex-start;
+       gap:14px;padding:16px 20px;border-radius:12px;margin-bottom:20px">
+    <i data-lucide="trash-2" style="width:18px;height:18px;flex-shrink:0;margin-top:1px"></i>
+    <div>
+      <strong>Deleted Items</strong>
+      <p style="margin:4px 0 0;font-size:12px;opacity:0.8">
+        Documents deleted by admins. Items are recoverable within 30 days.
+        After 30 days they are permanently removed.
+      </p>
+    </div>
+  </div>
+  <div id="deletedItemsTable" class="table-container"></div>
+</section>
+
+    <!-- ── Document Detail Modal ──────────────────────────────── -->
+    <div id="detailModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalTitle">Document Details</h2>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+      </div>
+    </div>
+
+    <!-- ── Image Preview Modal ────────────────────────────────── -->
+    <div id="imageModal" onclick="closeImageModal()">
+      <div class="image-modal-inner" onclick="event.stopPropagation()">
+        <button class="image-modal-close-btn" onclick="closeImageModal()" title="Close">
+          &times;
+        </button>
+        <img id="previewImage" src="" alt="Document Preview" />
+      </div>
+    </div>
+
+  </main>
+  <!-- ── End of main-content ────────────────────────────────── -->
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+# ============================================
+# FARMERVERIFY AI — MASTER REQUIREMENTS
+# ============================================
+# Python 3.10+ required
+# Install: pip install -r requirements.txt
+# ============================================
+
+
+# ────────────────────────────────────────────
+# BACKEND FRAMEWORK
+# ────────────────────────────────────────────
+
+# FastAPI — Main web framework for building APIs
+fastapi==0.109.2
+
+# Uvicorn — Server that runs FastAPI application
+uvicorn==0.27.1
+
+# Multipart — Handles file uploads (images from farmers)
+python-multipart==0.0.9
+
+
+# ────────────────────────────────────────────
+# IMAGE PROCESSING & COMPUTER VISION
+# ────────────────────────────────────────────
+
+# OpenCV — Image quality checks (blur, brightness, angle)
+opencv-python-headless==4.9.0.80
+
+# Pillow — Basic image operations (resize, convert, save)
+Pillow==10.2.0
+
+# NumPy — Mathematical operations on images
+numpy==1.26.4
+
+
+# ────────────────────────────────────────────
+# OCR (TEXT EXTRACTION FROM IMAGES)
+# ────────────────────────────────────────────
+
+# Tesseract Python Wrapper — Primary OCR engine
+pytesseract==0.3.10
+
+# EasyOCR — Secondary OCR (better for handwritten text)
+easyocr==1.7.1
+
+# Torch (Required by EasyOCR) — AI/ML framework
+# Note: This is large (~2GB). Install separately if needed.
+torch==2.2.0
+torchvision==0.17.0
+
+
+# ────────────────────────────────────────────
+# TEXT PROCESSING & MATCHING
+# ────────────────────────────────────────────
+
+# RapidFuzz — Fast fuzzy string matching
+# Used for: Name comparison, duplicate detection
+rapidfuzz==3.6.1
+
+# Regex — Advanced pattern matching
+# Used for: Account numbers, IFSC codes, phone numbers
+regex==2023.12.25
+
+
+# ────────────────────────────────────────────
+# WHATSAPP BOT (TWILIO)
+# ────────────────────────────────────────────
+
+# Twilio — WhatsApp messaging API
+twilio==9.0.4
+
+# Flask — Lightweight server for Twilio webhooks
+# (Twilio webhooks work better with Flask)
+flask==3.0.2
+
+
+# ────────────────────────────────────────────
+# VOICE (TEXT-TO-SPEECH)
+# ────────────────────────────────────────────
+
+# Google Cloud TTS — Generate voice messages
+google-cloud-texttospeech==2.16.3
+
+# gTTS — Simple alternative TTS (backup/free option)
+gTTS==2.5.1
+
+
+# ────────────────────────────────────────────
+# DATABASE
+# ────────────────────────────────────────────
+
+# Supabase — Database client (PostgreSQL)
+supabase==2.3.5
+
+# SQLAlchemy — Database ORM (optional, for complex queries)
+sqlalchemy==2.0.27
+
+
+# ────────────────────────────────────────────
+# CONFIGURATION & UTILITIES
+# ────────────────────────────────────────────
+
+# python-dotenv — Load .env file (API keys, settings)
+python-dotenv==1.0.1
+
+# Pydantic — Data validation (used by FastAPI)
+pydantic==2.6.1
+
+# Requests — HTTP requests (calling external APIs)
+requests==2.31.0
+
+# HTTPX — Async HTTP client (faster API calls)
+httpx==0.27.0
+
+# Python-Jose — JWT token handling (if needed)
+python-jose==3.3.0
+
+
+# ────────────────────────────────────────────
+# FILE HANDLING
+# ────────────────────────────────────────────
+
+# aiofiles — Async file operations
+aiofiles==23.2.1
+
+# python-magic — Detect file types (is it really an image?)
+python-magic==0.4.27
+
+
+# ────────────────────────────────────────────
+# LOGGING & MONITORING
+# ────────────────────────────────────────────
+
+# Loguru — Better logging (easier than built-in logging)
+loguru==0.7.2
+
+
+# ────────────────────────────────────────────
+# TESTING
+# ────────────────────────────────────────────
+
+# Pytest — Testing framework
+pytest==8.0.0
+
+# Pytest-asyncio — Async test support (for FastAPI)
+pytest-asyncio==0.23.4
+
+# Coverage — Test coverage reports
+pytest-cov==4.1.0
+
+
+# ────────────────────────────────────────────
+# FRAUD DETECTION (ADVANCED)
+# ────────────────────────────────────────────
+
+# Scikit-image — Image forensics (ELA analysis)
+scikit-image==0.22.0
+
+# ImageHash — Perceptual hashing (duplicate detection)
+imagehash==4.3.1
